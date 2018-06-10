@@ -27,6 +27,7 @@ It seems that the results are both influenced by the client and server side.
 ![ralink-results](https://www.dropbox.com/s/e9x2qf31fdku780/rpi-wifi.ralink.png?dl=1)
 
 * The measured bitrate stays below the target bitrate, starting from 72 Mbps. In fact, I can never get higher than 90 Mbps.
-* Packet loss is relatively low (below 1%). I've checked that wireless link retries were on, up to a max. limit of 1 retry (I couldn't configure the USB dongle to 0 retries).
+* Packet loss is relatively low (below 1%). I've checked that wireless link-level retries were on, up to a max. limit of 1 retry (I couldn't configure the USB dongle to 0 retries).
+  * You can alter the link-level retry limit with the command `iwconfig <wifi-iface-name> retry limit <new-limit>`, as explained in [this blog post](https://whitequark.org/blog/2011/09/12/tweaking-linux-tcp-stack-for-lossy-wireless-networks/).
 * CPU utilization at the Raspberry Pi side is still below 10%.
 
