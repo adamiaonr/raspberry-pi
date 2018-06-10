@@ -29,6 +29,8 @@ from collections import OrderedDict
 
 from prettytable import PrettyTable
 
+plt.rc('font', size = 20)
+
 def test(time, ip_server, proto = 'udp', bitrate = '54M'):
     # iperf3 -t <time> -c <ip_server> -u (or nothing) -b <bitrate>M
     cmd = ["iperf3", "-V", "-J", "-t", str(time), "-c", str(ip_server), ("-u" if proto == 'udp' else ''), "-b", str(bitrate) + 'M']
@@ -50,7 +52,8 @@ def plot(filename):
     yy4 = results.groupby(['trgt-bw'])['cpu-rcvr'].agg('mean').reset_index()
 
     plt.style.use('classic')
-    fig = plt.figure(figsize=(5, 3.75))
+    matplotlib.rcParams.update({'font.size': 20})
+    fig = plt.figure(figsize=(2*5, 2*3.75))
 
     ax1 = fig.add_subplot(1, 1, 1)
     ax1.xaxis.grid(False, ls = 'dotted', lw = 0.25)
@@ -61,7 +64,7 @@ def plot(filename):
     ax1.set_zorder(ax2.get_zorder() + 1)
     ax1.patch.set_visible(False)
 
-    ax1.set_title("channel : 36 (5.18 GHz),\nbw : 40 MHz, proto : UDP", fontsize = 11)
+    ax1.set_title("channel : 36 (5.18 GHz),\nchannel bw : 40 MHz, protocol : UDP", fontsize = 20)
     # scatter plot w/ measured bw
     for tb in yy1['trgt-bw']:
         y = yy1.loc[yy1['trgt-bw'] == tb]['res-bw'].values[0]
@@ -91,9 +94,9 @@ def plot(filename):
             float(yy4.loc[yy4['trgt-bw'] == tb]['cpu-rcvr']),
             color = colors[2], linewidth = 0.25, width = 2.5, label = ('cpu util. (@RPi)' if tb == xx[0] else ''))
 
-    ax1.set_xlabel("iperf3 target bitrate (Mbps)")
-    ax1.set_ylabel("iperf3 meas. bitrate (Mbps)")
-    ax2.set_ylabel("packet loss / cpu util. (%)")
+    ax1.set_xlabel("iperf3 target bitrate (Mbps)", fontsize = 20)
+    ax1.set_ylabel("iperf3 meas. bitrate (Mbps)", fontsize = 20)
+    ax2.set_ylabel("packet loss / cpu util. (%)", fontsize = 20)
 
     ax1.set_xlim(xx[0] - 10, xx[-1] + 10)
     ax1.set_ylim(0, 200)
@@ -104,8 +107,8 @@ def plot(filename):
     ax1.set_yticks(np.arange(0, 180, 20))
     ax2.set_yticks([0.01, 0.1, 1.0, 10.0, 100.0])
 
-    leg1 = ax1.legend(fontsize = 10, ncol = 1, loc = 'upper right', handletextpad = 0.2)
-    leg2 = ax2.legend(fontsize = 10, ncol = 1, loc = 'upper left', handletextpad = 0.2)
+    leg1 = ax1.legend(fontsize = 20, ncol = 1, loc = 'upper right', handletextpad = 0.2)
+    leg2 = ax2.legend(fontsize = 20, ncol = 1, loc = 'upper left', handletextpad = 0.2)
 
     plt.tight_layout()
     plt.savefig(filename.rstrip('.csv') + '.pdf', bbox_inches = 'tight', format = 'pdf')
@@ -142,8 +145,7 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "--plot", 
-         help = """plot results""",
-         action = "store_true")
+         help = """plot benchmark results from pre-existing .csv file. e.g.: '--plot <path-to-csv-file>'""")
 
     args = parser.parse_args()
 
@@ -164,11 +166,19 @@ if __name__ == "__main__":
         parser.print_help()
         sys.exit(1)
 
-    results_file = os.path.join(args.output_dir, ("rpi-wifi.xx.csv"))
-
+    results_file = ""
     if args.plot:
-        plot(results_file)
+
+        if not os.path.isfile(args.plot):
+            sys.stderr.write("""%s: [ERROR] please supply a valid .csv file path\n""" % sys.argv[0]) 
+            parser.print_help()
+            sys.exit(1)
+
+        plot(args.plot)
         sys.exit(0)
+
+    else:
+        results_file = os.path.join(args.output_dir, ("rpi-wifi." + str(time.time()).split('.')[0] + ".csv"))
 
     if not args.ip_server:
         sys.stderr.write("""%s: [ERROR] please supply an iperf3 server ip\n""" % sys.argv[0]) 
