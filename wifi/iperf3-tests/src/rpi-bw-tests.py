@@ -53,7 +53,7 @@ def plot(filename):
 
     plt.style.use('classic')
     matplotlib.rcParams.update({'font.size': 20})
-    fig = plt.figure(figsize=(2*5, 2*3.75))
+    fig = plt.figure(figsize=(1.80*5, 1.80*3.75))
 
     ax1 = fig.add_subplot(1, 1, 1)
     ax1.xaxis.grid(False, ls = 'dotted', lw = 0.25)
