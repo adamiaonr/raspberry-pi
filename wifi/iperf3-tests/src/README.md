@@ -4,7 +4,7 @@ I've ran a few tests with the Raspberry Pi 3 B+ working as an AP:
 
 I've ran a series of `iperf3` tests, according to the following parameters:
 * **Protocol:** UDP
-* **Client(s):** Either (1) my Macbook Pro 2015, or (2) an eeePC laptop with a USB WiFi dongle based on the Ralink RT5572 chipset.
+* **Client(s):** Either (1) my Macbook Pro 2015, or (2) an eeePC laptop with a [USB WiFi dongle based on the Ralink RT5572 chipset](https://www.amazon.de/300Mbit-WLAN-Adapter-Hochleistungs-Antennen-Dual-Band/dp/B00LLIOT34).
 * **Server:** Raspberry Pi 3 B+, working as an AP, channel 36 (5.18 GHz) 40 MHz channel bandwidth
 * **Target bitrates:** 11, 54, 72, 100, 120 and 150 Mbps
 * **Duration of a single run:** 10 seconds
