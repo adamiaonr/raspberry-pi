@@ -19,7 +19,7 @@ It seems that the results are both influenced by the client and server side.
 ![macbook-results](https://www.dropbox.com/s/5h48p7148dbvfr8/rpi-wifi.macbook.png?dl=1)
 
 * The measured bitrate (line and dots in red above) closely follows the target bitrate
-* Packet losses larger thann 10% start occurring at 120 Mbps
+* Packet losses larger than 10% start occurring at 120 Mbps
 * The CPU usage at the Raspberry Pi side stays below 10%
 
 ### Ralink 5572 USB dongle client
@@ -29,5 +29,6 @@ It seems that the results are both influenced by the client and server side.
 * The measured bitrate stays below the target bitrate, starting from 72 Mbps. In fact, I can never get higher than 90 Mbps.
 * Packet loss is relatively low (below 1%). I've checked that wireless link-level retries were on, up to a max. limit of 1 retry (I couldn't configure the USB dongle to 0 retries).
   * You can alter the link-level retry limit with the command `iwconfig <wifi-iface-name> retry limit <new-limit>`, as explained in [this blog post](https://whitequark.org/blog/2011/09/12/tweaking-linux-tcp-stack-for-lossy-wireless-networks/).
+  * This combination - missing the target bitrate & low packet loss - can be explained by link-level retries, which do seem to occur with the Macbook Pro 2015 (need to check this).
 * CPU utilization at the Raspberry Pi side is still below 10%.
 
