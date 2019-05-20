@@ -16,7 +16,7 @@ It seems that the results are both influenced by the client and server side.
 
 ### Macbook Pro 2015 client
 
-![macbook-results](https://www.dropbox.com/s/5h48p7148dbvfr8/rpi-wifi.macbook.png?dl=1)
+![macbook-results](https://i.imgur.com/gZ8M5zI.png)
 
 * The measured bitrate (line and dots in red above) closely follows the target bitrate
 * Packet losses larger than 10% start occurring at 120 Mbps
@@ -24,7 +24,7 @@ It seems that the results are both influenced by the client and server side.
 
 ### Ralink 5572 USB dongle client
 
-![ralink-results](https://www.dropbox.com/s/e9x2qf31fdku780/rpi-wifi.ralink.png?dl=1)
+![ralink-results](https://i.imgur.com/nozKcrx.png)
 
 * The measured bitrate stays below the target bitrate, starting from 72 Mbps. In fact, I can never get higher than 90 Mbps.
 * Packet loss is relatively low (below 1%). I've checked that wireless link-level retries were on, up to a max. limit of 1 retry (I couldn't configure the USB dongle to 0 retries).
